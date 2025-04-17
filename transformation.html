@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Voice Change Practice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f8ff;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 30px;
+      color: #ffffff;
+      text-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff;
+      }
+      100% {
+        text-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff, 0 0 40px #00d4ff;
+      }
+    }
+
+    .note {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-left: 6px solid #00d4ff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      margin: 20px auto 40px;
+      max-width: 800px;
+      font-size: 1.2em;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .question {
+      margin: 25px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .question:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    }
+
+    .question p {
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #c0eaff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      background-color: #333;
+      transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
+    }
+
+    input.correct {
+      background-color: #2ecc71 !important;
+      color: #fff !important;
+    }
+
+    input.incorrect {
+      background-color: #e74c3c !important;
+      color: #fff !important;
+    }
+
+    .mark {
+      position: absolute;
+      right: 20px;
+      bottom: 18px;
+      font-weight: bold;
+      color: #00ffcc;
+      font-size: 1.2em;
+      transition: color 0.3s ease;
+    }
+
+    #submitBtn {
+      display: block;
+      background-color: #00d4ff;
+      color: #000;
+      padding: 18px 35px;
+      border: none;
+      border-radius: 14px;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 40px auto;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
+    #submitBtn:hover {
+      background-color: #00f0ff;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+
+    .result {
+      text-align: center;
+      font-size: 1.5em;
+      color: #ffffff;
+      margin-top: 30px;
+      letter-spacing: 2px;
+    }
+
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      .note, .question {
+        padding: 15px;
+      }
+
+      .mark {
+        position: static;
+        display: block;
+        margin-top: 8px;
+        text-align: right;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Transformation Practice</h1>
+
+  <div class="note">
+    <strong>Note:</strong> Use <u>correct capitalization</u>, <u>punctuation</u>, and <u>spelling</u>. All answers are case-sensitive.
+  </div>
+
+  <div id="quiz"></div>
+
+  <button id="submitBtn">Submit</button>
+
+  <div id="resultContainer" class="result" style="display: none;"></div>
+
+  <script>
+    const questions = [
+    { q: "She is reading a book.", a: "A book is being read by her." },
+      { q: "They are playing football.", a: "Football is being played by them." },
+      { q: "I have eaten my dinner.", a: "My dinner has been eaten by me." },
+      { q: "We will visit Paris next year.", a: "Paris will be visited by us next year." },
+      { q: "The children are playing in the park.", a: "The park is being played in by the children." },
+      { q: "She will finish the project.", a: "The project will be finished by her." },
+      { q: "They are building a new school.", a: "A new school is being built by them." },
+      { q: "He is watching the movie.", a: "The movie is being watched by him." },
+      { q: "The teacher has taught the lesson.", a: "The lesson has been taught by the teacher." },
+      { q: "They will announce the results tomorrow.", a: "The results will be announced by them tomorrow." }
+    ];
+
+    const quizContainer = document.getElementById("quiz");
+
+    questions.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+
+      const label = document.createElement("p");
+      label.innerHTML = `<strong>Q${index + 1}:</strong> ${item.q}`;
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.dataset.answer = item.a;
+      input.id = `input-${index}`;
+
+      div.appendChild(label);
+      div.appendChild(input);
+      quizContainer.appendChild(div);
+
+      input.addEventListener("input", () => {
+        const userInput = input.value.trim();
+        const correctAnswer = input.dataset.answer.trim();
+
+        if (userInput === correctAnswer) {
+          input.classList.add("correct");
+          input.classList.remove("incorrect");
+          input.style.fontWeight = "bold";
+          input.style.color = "black";
+        } else {
+          input.classList.remove("correct");
+          input.classList.add("incorrect");
+          input.style.fontWeight = "bold";
+          input.style.color = "white";
+        }
+      });
+    });
+
+    document.getElementById("submitBtn").addEventListener("click", () => {
+      let score = 0;
+      questions.forEach((item, index) => {
+        const input = document.getElementById(`input-${index}`);
+        const userInput = input.value.trim();
+        if (userInput === item.a) {
+          score++;
+        }
+      });
+
+      // Hide quiz and show result
+      quizContainer.style.display = "none";
+      const resultContainer = document.getElementById("resultContainer");
+      resultContainer.style.display = "block";
+      resultContainer.innerHTML = `You scored ${score} out of 10`;
+    });
+  </script>
+</body>
+</html>
