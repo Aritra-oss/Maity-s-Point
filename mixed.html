@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Full English Grammar Practice</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Styling retained from original */
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f8ff;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 30px;
+      color: #ffffff;
+      text-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #00d4ff, 0 0 10px #00d4ff; }
+      100% { text-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff, 0 0 40px #00d4ff; }
+    }
+
+    .note {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-left: 6px solid #00d4ff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      margin: 20px auto 40px;
+      max-width: 800px;
+      font-size: 1.2em;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .question {
+      margin: 25px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .question:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+    }
+
+    .question p {
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #c0eaff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      background-color: #000000;
+      transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
+    }
+
+    input.correct {
+      background-color: #2ecc71 !important;
+      color: #fff !important;
+    }
+
+    input.incorrect {
+      background-color: #e74c3c !important;
+      color: #fff !important;
+    }
+
+    #submitBtn {
+      display: block;
+      background-color: #00d4ff;
+      color: #000;
+      padding: 18px 35px;
+      border: none;
+      border-radius: 14px;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 40px auto;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+
+    #submitBtn:hover {
+      background-color: #00f0ff;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+
+    .result {
+      text-align: center;
+      font-size: 1.5em;
+      color: #ffffff;
+      margin-top: 30px;
+      letter-spacing: 2px;
+    }
+
+    @media screen and (max-width: 600px) {
+      h1 { font-size: 2em; }
+      .note, .question { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Full English Grammar Practice</h1>
+
+  <div class="note">
+    <strong>Note:</strong> Use <u>correct capitalization</u>, <u>punctuation</u>, and <u>spelling</u>. All answers are case-sensitive.
+  </div>
+
+  <div id="quiz"></div>
+
+  <button id="submitBtn">Submit</button>
+
+  <div id="resultContainer" class="result" style="display: none;"></div>
+
+  <script>
+    const questions = [
+      { q: "He said, 'I am happy.' (Change narration)", a: ["He said that he was happy.", "He said he was happy."] },
+      { q: "The girl said, 'I want a doll.' (Change narration)", a: ["The girl said that she wanted a doll.", "The girl said she wanted a doll."] },
+      { q: "She asked, 'Are you hungry?' (Change narration)", a: ["She asked if I was hungry."] },
+      { q: "He said, 'I will call you.' (Change narration)", a: ["He said that he would call me.", "He said he would call me."] },
+      { q: "She said, 'I cannot come today.' (Change narration)", a: ["She said that she could not come that day.", "She said she could not come today."] },
+      { q: "Close the door. (Change the voice)", a: ["Let the door be closed.", "You are ordered to close the door."] },
+      { q: "We completed the work. (Change the voice)", a: ["The work was completed by us."] },
+      { q: "Do it now. (Change the voice)", a: ["Let it be done now."] },
+      { q: "He helps the poor. (Change the voice)", a: ["The poor are helped by him."] },
+      { q: "She has written a novel. (Change the voice)", a: ["A novel has been written by her."] },
+      { q: "Unless you work hard, you won't succeed. (Make it simple)", a: ["If you don't work hard, you won't succeed."] },
+      { q: "He is too weak to walk. (Make it simple)", a: ["He is so weak that he cannot walk."] },
+      { q: "He is rich but unhappy. (Make it complex)", a: ["Although he is rich, he is unhappy."] },
+      { q: "He is not only brave but also wise. (Make it complex)", a: ["He is both brave and wise."] },
+      { q: "He is so tired that he cannot stand. (Make it simple)", a: ["He is too tired to stand."] },
+      { q: "He finished the work. He went home. (Join using adjective clause)", a: ["He went home after finishing the work."] },
+      { q: "She was tired. She rested. (Join using adjective clause)", a: ["As she was tired, she rested."] },
+      { q: "He is honest. He is respected. (Join using adjective clause)", a: ["Because he is honest, he is respected."] },
+      { q: "I ran fast. I missed the train. (Join using adjective clause)", a: ["Though I ran fast, I missed the train."] },
+      { q: "He must work hard. He will fail. (Join using adjective clause)", a: ["He must work hard or he will fail."] },
+      { q: "He is ___ honest man. (Article)", a: ["an"] },
+      { q: "I saw ___ elephant. (Article)", a: ["an"] },
+      { q: "She bought ___ umbrella. (Article)", a: ["an"] },
+      { q: "He reads ___ Bible daily. (Article)", a: ["the"] },
+      { q: "I met ___ European lady. (Article)", a: ["a"] },
+      { q: "He is afraid ___ snakes. (Preposition)", a: ["of"] },
+      { q: "She is fond ___ music. (Preposition)", a: ["of"] },
+      { q: "We depend ___ our parents. (Preposition)", a: ["on"] },
+      { q: "He is good ___ Mathematics. (Preposition)", a: ["at"] },
+      { q: "He died ___ cancer. (Preposition)", a: ["of"] },
+      { q: "Swimming is a good exercise. (Identify the gerund)", a: ["Swimming"] },
+      { q: "He is fond of singing. (Identify the gerund)", a: ["Singing"] },
+      { q: "To read is important. (Identify the gerund)", a: ["To read"] },
+      { q: " Opening the gate, the man came in.(Split)", a: ["The man opened the gate.He came in"] },
+      { q: "Practice makes a man perfect. (Identify the verbal noun)", a: ["Practice"] },
+      { q: "He told me a story. (Change the voice)", a: ["A story was told to me by him."] },
+      { q: "She teaches us English. (Change the voice)", a: ["We are taught English by her."] },
+      { q: "He said, 'I lost my pen.'", a: ["He said that he had lost his pen."] },
+      { q: "The boy said, 'I am playing football.'", a: ["The boy said that he was playing football."] },
+      { q: "She said, 'He will arrive soon.'", a: ["She said that he would arrive soon."] },
+      { q: "'Have you finished?' he asked. (Narration)", a: ["He asked if I had finished."] },
+      { q: "'Do your work,' said the teacher. (Narration)", a: ["The teacher told me to do my work."] },
+      { q: "We could not go out. It was raining. (Join using adjective clause)", a: ["As it was raining, we could not go out."] },
+      { q: "He is poor. He is honest. (Join using adjective clause)", a: ["Though he is poor, he is honest."] },
+      { q: "We are late. We must hurry. (Join using adjective clause)", a: ["As we are late, we must hurry."] },
+      { q: "He is too lazy to work. (Make it simple)", a: ["He is so lazy that he cannot work."] },
+      { q: "She is so weak that she cannot lift the bag. (Make it simple)", a: ["She is too weak to lift the bag."] },
+      { q: "He told me, 'I am learning French.'(narration)", a: ["He told me that he was learning French."] }
+    
+    ];
+
+    const quizContainer = document.getElementById("quiz");
+
+    questions.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+
+      const label = document.createElement("p");
+      label.innerHTML = `<strong>Q${index + 1}:</strong> ${item.q}`;
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.dataset.answer = item.a.join(", ");
+      input.id = `input-${index}`;
+
+      div.appendChild(label);
+      div.appendChild(input);
+      quizContainer.appendChild(div);
+
+      input.addEventListener("input", () => {
+        const userInput = input.value.trim();
+        const correctAnswers = input.dataset.answer.split(", ").map(ans => ans.trim());
+        if (correctAnswers.includes(userInput)) {
+          input.classList.add("correct");
+          input.classList.remove("incorrect");
+        } else {
+          input.classList.remove("correct");
+          input.classList.add("incorrect");
+        }
+      });
+    });
+
+    document.getElementById("submitBtn").addEventListener("click", () => {
+      let score = 0;
+      questions.forEach((item, index) => {
+        const input = document.getElementById(`input-${index}`);
+        const userInput = input.value.trim();
+        const correctAnswers = item.a.join(", ").split(", ").map(ans => ans.trim());
+        if (correctAnswers.includes(userInput)) score++;
+      });
+      document.getElementById("quiz").style.display = "none";
+      const resultContainer = document.getElementById("resultContainer");
+      resultContainer.style.display = "block";
+      resultContainer.innerHTML = `You scored ${score} out of 48`;
+    });
+  </script>
+</body>
+</html>
