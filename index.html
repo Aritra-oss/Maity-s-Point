@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MAITY'S BOU</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Nunito:wght@600&display=swap" rel="stylesheet">
+
+  <!-- Firebase SDKs via Script Tags (Recommended) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+
   <style>
     * {
       margin: 0; padding: 0;
@@ -20,7 +25,6 @@
       justify-content: center;
       color: #ffffff;
       text-align: center;
-      overflow: hidden;
       padding: 20px;
     }
     h1 {
@@ -85,19 +89,62 @@
   <div id="preview"></div>
 
   <script>
-    document.getElementById("uploadInput").addEventListener("change", function(e) {
+    // Your Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCBGadYq_DD8CTOkE_QIzuXY-8cXOriO6M",
+      authDomain: "maitys-point.firebaseapp.com",
+      projectId: "maitys-point",
+      storageBucket: "maitys-point.appspot.com",
+      messagingSenderId: "249368391295",
+      appId: "1:249368391295:web:bd9a5d67bcfcca9f7f994a"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+
+    const uploadInput = document.getElementById("uploadInput");
+    const preview = document.getElementById("preview");
+
+    uploadInput.addEventListener("change", function (e) {
       const files = e.target.files;
-      alert("⚠️ Uploading to GitHub directly is not supported.\nUse Firebase or a backend.\nThis demo just shows your design.");
+      Array.from(files).forEach((file) => {
+        const storageRef = storage.ref('proofs/' + file.name);
+        const uploadTask = storageRef.put(file);
+
+        uploadTask.on('state_changed',
+          () => {},
+          (error) => {
+            alert("❌ Upload failed: " + error);
+          },
+          () => {
+            alert("✅ Uploaded: " + file.name);
+          }
+        );
+      });
     });
 
     function viewProofs() {
-      const preview = document.getElementById('preview');
-      preview.innerHTML = `
-        <p style="margin: 10px 0; font-size: 1em;">🔽 Sample Files (for demo only)</p>
-        <video src="sample.mp4" controls width="300"></video>
-        <img src="sample.jpg" width="300">
-        <iframe src="sample.pdf" width="300" height="300"></iframe>
-      `;
+      const listRef = storage.ref('proofs/');
+      preview.innerHTML = "<p>📁 Loading uploaded proofs...</p>";
+
+      listRef.listAll().then((res) => {
+        preview.innerHTML = '';
+        res.items.forEach((itemRef) => {
+          itemRef.getDownloadURL().then((url) => {
+            const ext = itemRef.name.split('.').pop().toLowerCase();
+            if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) {
+              preview.innerHTML += `<img src="${url}" width="300">`;
+            } else if (["mp4", "webm", "mov"].includes(ext)) {
+              preview.innerHTML += `<video src="${url}" controls width="300"></video>`;
+            } else if (["pdf"].includes(ext)) {
+              preview.innerHTML += `<iframe src="${url}" width="300" height="300"></iframe>`;
+            } else {
+              preview.innerHTML += `<a href="${url}" target="_blank">📄 ${itemRef.name}</a><br>`;
+            }
+          });
+        });
+      });
     }
   </script>
 
