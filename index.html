@@ -1,121 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>English Practice Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MAITY'S BOU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Nunito:wght@600&display=swap" rel="stylesheet">
   <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Nunito', 'Poppins', sans-serif;
+    }
     body {
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-      font-family: 'Orbitron', sans-serif;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
-      color: #fff;
-    }
-
-    h1 {
-      color: #fff;
-      margin-bottom: 50px;
-      text-shadow: 0 0 10px #fff, 0 0 20px #00d4ff;
-      font-size: 3em;
+      color: #ffffff;
       text-align: center;
-      animation: glow 1.5s infinite alternate;
+      overflow: hidden;
+      padding: 20px;
     }
-
-    @keyframes glow {
-      0% {
-        text-shadow: 0 0 10px #fff, 0 0 20px #00d4ff, 0 0 30px #00d4ff;
-      }
-      100% {
-        text-shadow: 0 0 20px #fff, 0 0 40px #00d4ff, 0 0 50px #00d4ff;
-      }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 40px;
+      color: #ffffff;
+      text-shadow: 0 0 10px #fff, 0 0 25px #0ff;
     }
-
-    .section-button {
-       background-color: #00aeff;
-      color: #ecf0f1;
-      padding: 20px 60px;  /* Standard padding for consistency */
+    .btn {
+      padding: 15px 30px;
       margin: 15px;
+      font-size: 1em;
       border: none;
       border-radius: 30px;
-      font-size: 1.3em;   /* Consistent font size */
       cursor: pointer;
+      background: #ffffff;
+      color: #302b63;
+      box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
       transition: all 0.3s ease-in-out;
-      box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
-      position: relative;
-      overflow: hidden;
-      width: 360px;  /* Standard width for uniformity */
-      text-align: center;
-      line-height: 1.6;  /* Ensures multi-line text fits properly */
     }
-
-    .section-button::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 300%;
-      height: 300%;
-      background: linear-gradient(45deg, #00d4ff, #34495e, #00f0ff);
-      transition: all 0.3s ease-in-out;
-      transform: translate(-50%, -50%) rotate(45deg);
-      border-radius: 50%;
-      z-index: 0;
-    }
-
-    .section-button:hover {
-      background-color: #34495e;
+    .btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(0, 212, 255, 1);  /* Enhanced glowing effect */
+      background: #0ff;
+      color: #000;
+      box-shadow: 0 0 25px #fff, 0 0 35px #0ff;
     }
-
-    .section-button:hover::before {
-      width: 0;
-      height: 0;
+    input[type="file"] {
+      display: none;
     }
-
-    .section-button span {
-      position: relative;
-      z-index: 1;
-      font-weight: bold;
-      font-size: 1.4em;
-      letter-spacing: 1px;
-      white-space: nowrap;  /* Ensures text stays in one line */
-      overflow: hidden;
-      text-overflow: ellipsis; /* Adds ellipsis if text overflows */
-    }
-
-    /* Futuristic underline effect on hover */
-    .section-button:hover span::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
+    #preview {
+      margin-top: 25px;
       width: 100%;
-      height: 3px;
-      background-color: #00d4ff;
-      transform: scaleX(0);
-      transform-origin: bottom right;
-      transition: transform 0.3s ease;
+      max-height: 40vh;
+      overflow-y: auto;
     }
-
-    .section-button:hover span::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
+    video, img, iframe {
+      max-width: 95%;
+      margin: 15px 0;
+      border: 2px solid #fff;
+      border-radius: 20px;
+    }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8em;
+      }
+      .btn {
+        font-size: 0.9em;
+        padding: 12px 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Maity's Point</h1>
 
-  <a href="voice.html"><button class="section-button"><span>Voice Change</span></button></a>
-  <a href="narration.html"><button class="section-button"><span>Narration Change</span></button></a>
-  <a href="transformation.html"><button class="section-button"><span>Transformation</span></button></a>
-  <a href="joining.html"><button class="section-button"><span>Joining</span></button></a>
-  <a href="mixed.html"><button class="section-button"><span>Mixed Test</span></button></a>
+  <h1>YOU ARE ONLY MINE..</h1>
+
+  <label class="btn" for="uploadInput">UPLOAD PROOF</label>
+  <input type="file" id="uploadInput" multiple>
+
+  <button class="btn" onclick="viewProofs()">VIEW PROOFS</button>
+
+  <div id="preview"></div>
+
+  <script>
+    document.getElementById("uploadInput").addEventListener("change", function(e) {
+      const files = e.target.files;
+      alert("⚠️ Uploading to GitHub directly is not supported.\nUse Firebase or a backend.\nThis demo just shows your design.");
+    });
+
+    function viewProofs() {
+      const preview = document.getElementById('preview');
+      preview.innerHTML = `
+        <p style="margin: 10px 0; font-size: 1em;">🔽 Sample Files (for demo only)</p>
+        <video src="sample.mp4" controls width="300"></video>
+        <img src="sample.jpg" width="300">
+        <iframe src="sample.pdf" width="300" height="300"></iframe>
+      `;
+    }
+  </script>
+
 </body>
 </html>
