@@ -1,152 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MAITY'S BOU</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Nunito:wght@600&display=swap" rel="stylesheet">
-
-  <!-- Firebase SDKs via Script Tags (Recommended) -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOU ARE ONLY MINE..</title>
   <style>
-    * {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-      font-family: 'Nunito', 'Poppins', sans-serif;
-    }
+    /* Background and font setup */
     body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000, #2e003e, #1a001f, #000000);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
       height: 100vh;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       color: #ffffff;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    .container {
       text-align: center;
       padding: 20px;
+      backdrop-filter: blur(10px);
     }
+
     h1 {
-      font-size: 2.5em;
-      margin-bottom: 40px;
+      font-size: 2.5rem;
       color: #ffffff;
-      text-shadow: 0 0 10px #fff, 0 0 25px #0ff;
+      text-shadow: 0 0 12px #ff00cc, 0 0 24px #00ffff;
+      margin-bottom: 50px;
+      letter-spacing: 1.5px;
+      animation: pulseText 3s ease-in-out infinite;
     }
-    .btn {
-      padding: 15px 30px;
-      margin: 15px;
-      font-size: 1em;
+
+    @keyframes pulseText {
+      0%, 100% { text-shadow: 0 0 12px #ff00cc, 0 0 24px #00ffff; }
+      50% { text-shadow: 0 0 24px #00ffff, 0 0 48px #ff00cc; }
+    }
+
+    #button-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .glow-button {
+      padding: 14px 30px;
       border: none;
-      border-radius: 30px;
+      outline: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: #111;
+      color: #fff;
+      box-shadow: 0 0 12px #ff00cc, 0 0 25px #00ffff;
+      transition: all 0.3s ease;
       cursor: pointer;
-      background: #ffffff;
-      color: #302b63;
-      box-shadow: 0 0 15px #0ff, 0 0 25px #0ff;
-      transition: all 0.3s ease-in-out;
+      min-width: 220px;
+      letter-spacing: 1px;
     }
-    .btn:hover {
-      transform: scale(1.05);
-      background: #0ff;
+
+    .glow-button:hover {
+      transform: scale(1.08);
+      background: linear-gradient(90deg, #ff00cc, #00ffff);
       color: #000;
-      box-shadow: 0 0 25px #fff, 0 0 35px #0ff;
+      box-shadow: 0 0 20px #ff00cc, 0 0 40px #00ffff;
     }
-    input[type="file"] {
-      display: none;
+
+    a {
+      text-decoration: none;
     }
-    #preview {
-      margin-top: 25px;
-      width: 100%;
-      max-height: 40vh;
-      overflow-y: auto;
-    }
-    video, img, iframe {
-      max-width: 95%;
-      margin: 15px 0;
-      border: 2px solid #fff;
-      border-radius: 20px;
-    }
-    @media (max-width: 768px) {
+
+    @media (max-width: 600px) {
       h1 {
-        font-size: 1.8em;
+        font-size: 1.8rem;
       }
-      .btn {
-        font-size: 0.9em;
+
+      .glow-button {
+        font-size: 0.9rem;
         padding: 12px 20px;
+        min-width: 180px;
       }
     }
   </style>
 </head>
 <body>
-
-  <h1>YOU ARE ONLY MINE..</h1>
-
-  <label class="btn" for="uploadInput">UPLOAD PROOF</label>
-  <input type="file" id="uploadInput" multiple>
-
-  <button class="btn" onclick="viewProofs()">VIEW PROOFS</button>
-
-  <div id="preview"></div>
-
-  <script>
-    // Your Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyCBGadYq_DD8CTOkE_QIzuXY-8cXOriO6M",
-      authDomain: "maitys-point.firebaseapp.com",
-      projectId: "maitys-point",
-      storageBucket: "maitys-point.appspot.com",
-      messagingSenderId: "249368391295",
-      appId: "1:249368391295:web:bd9a5d67bcfcca9f7f994a"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const storage = firebase.storage();
-
-    const uploadInput = document.getElementById("uploadInput");
-    const preview = document.getElementById("preview");
-
-    uploadInput.addEventListener("change", function (e) {
-      const files = e.target.files;
-      Array.from(files).forEach((file) => {
-        const storageRef = storage.ref('proofs/' + file.name);
-        const uploadTask = storageRef.put(file);
-
-        uploadTask.on('state_changed',
-          () => {},
-          (error) => {
-            alert("❌ Upload failed: " + error);
-          },
-          () => {
-            alert("✅ Uploaded: " + file.name);
-          }
-        );
-      });
-    });
-
-    function viewProofs() {
-      const listRef = storage.ref('proofs/');
-      preview.innerHTML = "<p>📁 Loading uploaded proofs...</p>";
-
-      listRef.listAll().then((res) => {
-        preview.innerHTML = '';
-        res.items.forEach((itemRef) => {
-          itemRef.getDownloadURL().then((url) => {
-            const ext = itemRef.name.split('.').pop().toLowerCase();
-            if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) {
-              preview.innerHTML += `<img src="${url}" width="300">`;
-            } else if (["mp4", "webm", "mov"].includes(ext)) {
-              preview.innerHTML += `<video src="${url}" controls width="300"></video>`;
-            } else if (["pdf"].includes(ext)) {
-              preview.innerHTML += `<iframe src="${url}" width="300" height="300"></iframe>`;
-            } else {
-              preview.innerHTML += `<a href="${url}" target="_blank">📄 ${itemRef.name}</a><br>`;
-            }
-          });
-        });
-      });
-    }
-  </script>
-
+  <div class="container">
+    <h1>YOU ARE ONLY MINE..</h1>
+    <div id="button-section">
+      <a href="https://forms.gle/kDRV9GYFqGtdu7yH9" target="_blank">
+        <button class="glow-button">UPLOAD PROOF</button>
+      </a>
+      <a href="https://drive.google.com/drive/folders/1aagJ8VZjIdq9s-Jg6r9q7Ms2ryaCq_GcYH1GBJukm_FnyZZ7Q1dy6tAHJTmmpfkkWCcgfe8P?usp=sharing" target="_blank">
+        <button class="glow-button">VIEW PROOFS</button>
+      </a>
+      <button class="glow-button">HOW TO DO IT</button>
+    </div>
+  </div>
 </body>
 </html>
