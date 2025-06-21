@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>YOU ARE ONLY MINE..</title>
   <style>
-    /* Background and font setup */
     body {
       margin: 0;
       padding: 0;
@@ -81,6 +80,16 @@
       text-decoration: none;
     }
 
+    video {
+      margin-top: 40px;
+      width: 80%;
+      max-width: 720px;
+      display: none;
+      border: 2px solid #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #00ffff;
+    }
+
     @media (max-width: 600px) {
       h1 {
         font-size: 1.8rem;
@@ -90,6 +99,10 @@
         font-size: 0.9rem;
         padding: 12px 20px;
         min-width: 180px;
+      }
+
+      video {
+        width: 95%;
       }
     }
   </style>
@@ -104,8 +117,21 @@
       <a href="https://drive.google.com/drive/folders/1aagJ8VZjIdq9s-Jg6r9q7Ms2ryaCq_GcYH1GBJukm_FnyZZ7Q1dy6tAHJTmmpfkkWCcgfe8P?usp=sharing" target="_blank">
         <button class="glow-button">VIEW PROOFS</button>
       </a>
-      <button class="glow-button">HOW TO DO IT</button>
+      <button class="glow-button" onclick="showVideo()">HOW TO DO IT</button>
     </div>
+
+    <video id="tutorialVideo" controls>
+      <source src="proof%20tutorial.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
+
+  <script>
+    function showVideo() {
+      const video = document.getElementById("tutorialVideo");
+      video.style.display = "block";
+      video.play();
+    }
+  </script>
 </body>
 </html>
