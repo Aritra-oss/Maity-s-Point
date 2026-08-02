@@ -1,1 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Countdown 💖</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&family=Dancing+Script&family=Playfair+Display:wght@400;600&display=swap');
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffe4ec, #f3d1ff, #fff0f5);
+    background-size: 300% 300%;
+    animation: gradientFlow 15s ease infinite;
+    display: flex; justify-content: center; align-items: center;
+    position: fixed; top: 0; left: 0;
+    padding: 20px;
+  }
+
+  @keyframes gradientFlow {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .container {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+
+  .countdown {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+    animation: float 5s ease-in-out infinite;
+    transition: opacity 1.5s ease;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .time-box {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    width: 110px; height: 135px;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    box-shadow: 0 0 25px rgba(255, 182, 193, 0.4);
+    transition: all 0.5s ease;
+  }
+
+  .time-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(255, 182, 193, 0.7);
+  }
+
+  .number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ff6392;
+    text-shadow: 0 0 10px rgba(255, 99, 146, 0.8);
+  }
+
+  .label {
+    font-size: 1rem;
+    color: #6d597a;
+    margin-top: 10px;
+  }
+
+  .heading {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: #c84b7c;
+    margin-bottom: 45px;
+    text-shadow: 0 0 15px rgba(200, 75, 124, 0.5);
+    animation: fadeIn 2s ease;
+    text-align: center;
+    transition: opacity 1.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hearts {
+    position: absolute; width: 100%; height: 100%;
+    top: 0; left: 0;
+    overflow: hidden; pointer-events: none;
+  }
+
+  .heart {
+    position: absolute;
+    width: 15px; height: 15px;
+    background-color: rgba(255, 105, 180, 0.4);
+    transform: rotate(-45deg);
+    animation: fall 8s linear infinite;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 15px; height: 15px;
+    background-color: inherit;
+    border-radius: 50%;
+  }
+
+  .heart::before { top: -7.5px; left: 0; }
+  .heart::after { left: 7.5px; top: 0; }
+
+  @keyframes fall {
+    0% { transform: translateY(-10vh) rotate(-45deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(-45deg); opacity: 0; }
+  }
+
+  .message {
+    text-align: center;
+    color: #73385f;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    max-width: 85%;
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 2s ease;
+    position: absolute;
+  }
+
+  .message h1 {
+    font-size: 2.3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .message.show { opacity: 1; }
+
+  .hidden { display: none; }
+
+  .particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    animation: moveParticle 8s linear infinite;
+  }
+
+  @keyframes moveParticle {
+    0% { transform: translateY(0) translateX(0); opacity: 1; }
+    100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+  }
+
+  .celebration-msg {
+    position: absolute;
+    top: 75%;
+    font-family: 'Dancing Script', cursive;
+    color: #d74f8d;
+    font-size: 1.8rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .celebration-msg.show { opacity: 1; }
+
+  .confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: rgba(255,192,203,0.9);
+    animation: confettiFall 3s linear forwards;
+    border-radius: 50%;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  @media (max-width: 600px) {
+    .number { font-size: 2.2rem; }
+    .time-box { width: 90px; height: 110px; }
+    .heading { font-size: 2.2rem; }
+    .message h1 { font-size: 1.8rem; }
+    .message { font-size: 1.2rem; }
+    .celebration-msg { font-size: 1.4rem; top: 80%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 class="heading" id="mainHeading">Your Birthday comes in</h1>
+  <div class="countdown" id="countdown">
+    <div class="time-box">
+      <div class="number" id="hours">00</div>
+      <div class="label">Hours</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="minutes">00</div>
+      <div class="label">Minutes</div>
+    </div>
+    <div class="time-box">
+      <div class="number" id="seconds">00</div>
+      <div class="label">Seconds</div>
+    </div>
+  </div>
+
+  <div class="celebration-msg" id="celebrationMsg"></div>
+
+  <div class="message" id="birthdayMessage">
+    <h1>Happy Birthday to You</h1>
+    <p>
+      Happy Birthday to the man who gave me everything while asking for nothing in return. Thank you for your endless sacrifices, your steady support, and the unconditional love that built who I am today. You are my greatest inspiration and safe harbor. Wishing you a year filled with as much peace and happiness as you’ve given me. I love you, Dad.
+    </p>
+  </div>
+
+  <div class="hearts" id="hearts"></div>
+</div>
+
+<script>
+  const countdown = document.getElementById('countdown');
+  const message = document.getElementById('birthdayMessage');
+  const heartsContainer = document.getElementById('hearts');
+  const celebrationMsg = document.getElementById('celebrationMsg');
+  const heading = document.getElementById('mainHeading');
+
+  document.body.style.overflow = 'hidden';
+  document.body.style.position = 'fixed';
+  document.body.style.width = '100%';
+  document.body.style.height = '100%';
+
+  // Floating background particles
+  for(let i = 0; i < 40; i++){
+    let particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.left = Math.random() * 100 + 'vw';
+    particle.style.top = Math.random() * 100 + 'vh';
+    particle.style.animationDuration = (5 + Math.random() * 5) + 's';
+    particle.style.animationDelay = Math.random() * 5 + 's';
+    document.body.appendChild(particle);
+  }
+
+  const targetDate = new Date('November 11, 2025 00:00:00').getTime();
+  let lastCelebratedHour = null;
+
+  const messages = [
+    "Only {{hour}} hours left ji... 🩷 Wishing you a very very happy birthday in advance!",
+    "Just {{hour}} more hours before your special day lights up the world 💫",
+    "Tick-tock... only {{hour}} hours to go till your magical birthday moment ✨",
+    "Only {{hour}} hours left! I can already feel the excitement in the air 🎀",
+    "The countdown is real — {{hour}} hours left until the queen’s day 👑",
+    "{{hour}} more hours and your beautiful smile will shine brighter than ever 🌸",
+    "Only {{hour}} hours left, and my heart’s already celebrating 💖",
+    "Just {{hour}} hours before we say — Happy Birthday, my dearest one! 💝"
+  ];
+
+  const now = new Date().getTime();
+  if (now >= targetDate) {
+    // Birthday already started — show the final message immediately
+    showBirthdayMessage();
+  } else {
+    // Normal countdown
+    const timer = setInterval(() => {
+      const current = new Date().getTime();
+      const distance = targetDate - current;
+
+      if (distance <= 0) {
+        clearInterval(timer);
+        showBirthdayMessage();
+        return;
+      }
+
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+      document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+
+      if (minutes === 0 && seconds === 0 && hours !== lastCelebratedHour) {
+        lastCelebratedHour = hours;
+        showCelebration(hours);
+      }
+    }, 1000);
+  }
+
+  function showCelebration(hoursLeft) {
+    const randomMsg = messages[Math.floor(Math.random() * messages.length)].replace("{{hour}}", hoursLeft);
+    celebrationMsg.textContent = randomMsg;
+    celebrationMsg.classList.add('show');
+
+    for (let i = 0; i < 30; i++) {
+      const conf = document.createElement('div');
+      conf.classList.add('confetti');
+      conf.style.left = Math.random() * 100 + 'vw';
+      conf.style.background = `hsl(${Math.random()*360}, 70%, 80%)`;
+      conf.style.animationDuration = (2 + Math.random() * 3) + 's';
+      document.body.appendChild(conf);
+      setTimeout(() => conf.remove(), 3000);
+    }
+
+    setTimeout(() => {
+      celebrationMsg.classList.remove('show');
+    }, 8000);
+  }
+
+  function showBirthdayMessage() {
+    heading.style.opacity = '0';
+    countdown.style.opacity = '0';
+    celebrationMsg.style.opacity = '0';
+
+    setTimeout(() => {
+      heading.classList.add('hidden');
+      countdown.classList.add('hidden');
+      celebrationMsg.classList.add('hidden');
+      message.classList.add('show');
+      startHeartRain();
+    }, 1500);
+  }
+
+  function startHeartRain() {
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.width = heart.style.height = 10 + Math.random() * 20 + 'px';
+      heart.style.backgroundColor = 'rgba(255, 105, 180, ' + (0.2 + Math.random() * 0.4) + ')';
+      heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }, 250);
+  }
+</script>
+</body>
+</html>
