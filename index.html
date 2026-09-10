@@ -3,342 +3,492 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Countdown 💖</title>
+<title>10th September 💞</title>
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&family=Dancing+Script&family=Playfair+Display:wght@400;600&display=swap');
+* {
+    box-sizing: border-box;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Georgia, "Times New Roman", serif;
+    background: linear-gradient(135deg, #ffd6e7, #fff0f6, #ffc5dd);
+    color: #6b2145;
+    overflow-x: hidden;
+}
 
-  html, body {
-    width: 100%; height: 100%;
-    overflow: hidden;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ffe4ec, #f3d1ff, #fff0f5);
-    background-size: 300% 300%;
-    animation: gradientFlow 15s ease infinite;
-    display: flex; justify-content: center; align-items: center;
-    position: fixed; top: 0; left: 0;
-    padding: 20px;
-  }
+/* Flowers */
+body::before,
+body::after {
+    content: "🌸 🌷 🌺 🌹 🌸 🌷 🌺 🌹";
+    position: fixed;
+    width: 100%;
+    left: 0;
+    font-size: 28px;
+    letter-spacing: 15px;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+}
 
-  @keyframes gradientFlow {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
+body::before {
+    top: 10px;
+}
 
-  .container {
-    width: 100%; height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    overflow: hidden; position: relative;
-  }
+body::after {
+    bottom: 10px;
+}
 
-  .countdown {
-    display: flex;
-    gap: 25px;
-    justify-content: center;
+/* Pages */
+.page {
+    min-height: 100vh;
+    display: none;
     align-items: center;
-    animation: float 5s ease-in-out infinite;
-    transition: opacity 1.5s ease;
-  }
+    justify-content: center;
+    padding: 70px 20px;
+    position: relative;
+    z-index: 1;
+}
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
+.page.active {
+    display: flex;
+    animation: fadeIn 0.7s ease;
+}
 
-  .time-box {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    width: 110px; height: 135px;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    box-shadow: 0 0 25px rgba(255, 182, 193, 0.4);
-    transition: all 0.5s ease;
-  }
+/* Card */
+.card {
+    width: min(720px, 100%);
+    background: rgba(255, 255, 255, 0.84);
+    border: 2px solid rgba(255, 105, 160, 0.35);
+    border-radius: 30px;
+    padding: 40px 28px;
+    text-align: center;
+    box-shadow: 0 18px 50px rgba(171, 54, 105, 0.18);
+    backdrop-filter: blur(8px);
+}
 
-  .time-box:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 40px rgba(255, 182, 193, 0.7);
-  }
+h1 {
+    font-size: clamp(55px, 13vw, 100px);
+    line-height: 0.95;
+    margin: 10px 0 20px;
+    color: #c52e72;
+}
 
-  .number {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #ff6392;
-    text-shadow: 0 0 10px rgba(255, 99, 146, 0.8);
-  }
+h2 {
+    font-size: clamp(30px, 7vw, 48px);
+    color: #c52e72;
+    margin-bottom: 25px;
+}
 
-  .label {
-    font-size: 1rem;
-    color: #6d597a;
+h3 {
+    font-size: 21px;
+    color: #a5285e;
+}
+
+.date {
+    font-size: clamp(24px, 6vw, 40px);
+    font-style: italic;
+    color: #8f2858;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 20px 0;
+}
+
+/* Buttons */
+.btn {
+    border: none;
+    border-radius: 999px;
+    padding: 14px 25px;
+    margin: 10px 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+    box-shadow: 0 7px 18px rgba(155, 40, 91, 0.18);
+}
+
+.btn:hover {
+    transform: translateY(-3px) scale(1.04);
+}
+
+.next {
+    background: #e95b9b;
+    color: white;
+}
+
+.yes {
+    background: #36a852;
+    color: white;
+}
+
+.no {
+    background: #e53935;
+    color: white;
+}
+
+/* Heart */
+.heart {
+    font-size: 45px;
+    animation: pulse 1.4s infinite;
+}
+
+/* No message */
+#noArea {
+    position: relative;
+    min-height: 100px;
+}
+
+#message {
+    min-height: 35px;
     margin-top: 10px;
-  }
+    font-size: 19px;
+    font-weight: bold;
+    color: #a5285e;
+}
 
-  .heading {
-    font-family: 'Great Vibes', cursive;
-    font-size: 3rem;
-    color: #c84b7c;
-    margin-bottom: 45px;
-    text-shadow: 0 0 15px rgba(200, 75, 124, 0.5);
-    animation: fadeIn 2s ease;
-    text-align: center;
-    transition: opacity 1.5s ease;
-  }
+/* Falling flowers */
+.flower {
+    position: fixed;
+    top: -50px;
+    font-size: 27px;
+    animation: fall linear infinite;
+    opacity: 0.65;
+    z-index: 0;
+    pointer-events: none;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .hearts {
-    position: absolute; width: 100%; height: 100%;
-    top: 0; left: 0;
-    overflow: hidden; pointer-events: none;
-  }
-
-  .heart {
-    position: absolute;
-    width: 15px; height: 15px;
-    background-color: rgba(255, 105, 180, 0.4);
-    transform: rotate(-45deg);
-    animation: fall 8s linear infinite;
-  }
-
-  .heart::before,
-  .heart::after {
-    content: "";
-    position: absolute;
-    width: 15px; height: 15px;
-    background-color: inherit;
-    border-radius: 50%;
-  }
-
-  .heart::before { top: -7.5px; left: 0; }
-  .heart::after { left: 7.5px; top: 0; }
-
-  @keyframes fall {
-    0% { transform: translateY(-10vh) rotate(-45deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(-45deg); opacity: 0; }
-  }
-
-  .message {
-    text-align: center;
-    color: #73385f;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    max-width: 85%;
-    line-height: 1.6;
-    opacity: 0;
-    transition: opacity 2s ease;
-    position: absolute;
-  }
-
-  .message h1 {
-    font-size: 2.3rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
-
-  .message.show { opacity: 1; }
-
-  .hidden { display: none; }
-
-  .particle {
-    position: absolute;
-    width: 4px; height: 4px;
-    background: rgba(255,255,255,0.5);
-    border-radius: 50%;
-    animation: moveParticle 8s linear infinite;
-  }
-
-  @keyframes moveParticle {
-    0% { transform: translateY(0) translateX(0); opacity: 1; }
-    100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
-  }
-
-  .celebration-msg {
-    position: absolute;
-    top: 75%;
-    font-family: 'Dancing Script', cursive;
-    color: #d74f8d;
-    font-size: 1.8rem;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 1s ease;
-  }
-  .celebration-msg.show { opacity: 1; }
-
-  .confetti {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: rgba(255,192,203,0.9);
-    animation: confettiFall 3s linear forwards;
-    border-radius: 50%;
-  }
-
-  @keyframes confettiFall {
-    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-  }
-
-  @media (max-width: 600px) {
-    .number { font-size: 2.2rem; }
-    .time-box { width: 90px; height: 110px; }
-    .heading { font-size: 2.2rem; }
-    .message h1 { font-size: 1.8rem; }
-    .message { font-size: 1.2rem; }
-    .celebration-msg { font-size: 1.4rem; top: 80%; }
-  }
-</style>
-</head>
-<body>
-<div class="container">
-  <h1 class="heading" id="mainHeading">Your Birthday comes in</h1>
-  <div class="countdown" id="countdown">
-    <div class="time-box">
-      <div class="number" id="hours">00</div>
-      <div class="label">Hours</div>
-    </div>
-    <div class="time-box">
-      <div class="number" id="minutes">00</div>
-      <div class="label">Minutes</div>
-    </div>
-    <div class="time-box">
-      <div class="number" id="seconds">00</div>
-      <div class="label">Seconds</div>
-    </div>
-  </div>
-
-  <div class="celebration-msg" id="celebrationMsg"></div>
-
-  <div class="message" id="birthdayMessage">
-    <h1>Happy Birthday to You</h1>
-    <p>
-      Happy Birthday to the man who gave me everything while asking for nothing in return. Thank you for your endless sacrifices, your steady support, and the unconditional love that built who I am today. You are my greatest inspiration and safe harbor. Wishing you a year filled with as much peace and happiness as you’ve given me. I love you, Dad.
-    </p>
-  </div>
-
-  <div class="hearts" id="hearts"></div>
-</div>
-
-<script>
-  const countdown = document.getElementById('countdown');
-  const message = document.getElementById('birthdayMessage');
-  const heartsContainer = document.getElementById('hearts');
-  const celebrationMsg = document.getElementById('celebrationMsg');
-  const heading = document.getElementById('mainHeading');
-
-  document.body.style.overflow = 'hidden';
-  document.body.style.position = 'fixed';
-  document.body.style.width = '100%';
-  document.body.style.height = '100%';
-
-  // Floating background particles
-  for(let i = 0; i < 40; i++){
-    let particle = document.createElement('div');
-    particle.classList.add('particle');
-    particle.style.left = Math.random() * 100 + 'vw';
-    particle.style.top = Math.random() * 100 + 'vh';
-    particle.style.animationDuration = (5 + Math.random() * 5) + 's';
-    particle.style.animationDelay = Math.random() * 5 + 's';
-    document.body.appendChild(particle);
-  }
-
-  const targetDate = new Date('November 11, 2025 00:00:00').getTime();
-  let lastCelebratedHour = null;
-
-  const messages = [
-    "Only {{hour}} hours left ji... 🩷 Wishing you a very very happy birthday in advance!",
-    "Just {{hour}} more hours before your special day lights up the world 💫",
-    "Tick-tock... only {{hour}} hours to go till your magical birthday moment ✨",
-    "Only {{hour}} hours left! I can already feel the excitement in the air 🎀",
-    "The countdown is real — {{hour}} hours left until the queen’s day 👑",
-    "{{hour}} more hours and your beautiful smile will shine brighter than ever 🌸",
-    "Only {{hour}} hours left, and my heart’s already celebrating 💖",
-    "Just {{hour}} hours before we say — Happy Birthday, my dearest one! 💝"
-  ];
-
-  const now = new Date().getTime();
-  if (now >= targetDate) {
-    // Birthday already started — show the final message immediately
-    showBirthdayMessage();
-  } else {
-    // Normal countdown
-    const timer = setInterval(() => {
-      const current = new Date().getTime();
-      const distance = targetDate - current;
-
-      if (distance <= 0) {
-        clearInterval(timer);
-        showBirthdayMessage();
-        return;
-      }
-
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-      document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-      document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-
-      if (minutes === 0 && seconds === 0 && hours !== lastCelebratedHour) {
-        lastCelebratedHour = hours;
-        showCelebration(hours);
-      }
-    }, 1000);
-  }
-
-  function showCelebration(hoursLeft) {
-    const randomMsg = messages[Math.floor(Math.random() * messages.length)].replace("{{hour}}", hoursLeft);
-    celebrationMsg.textContent = randomMsg;
-    celebrationMsg.classList.add('show');
-
-    for (let i = 0; i < 30; i++) {
-      const conf = document.createElement('div');
-      conf.classList.add('confetti');
-      conf.style.left = Math.random() * 100 + 'vw';
-      conf.style.background = `hsl(${Math.random()*360}, 70%, 80%)`;
-      conf.style.animationDuration = (2 + Math.random() * 3) + 's';
-      document.body.appendChild(conf);
-      setTimeout(() => conf.remove(), 3000);
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
 
-    setTimeout(() => {
-      celebrationMsg.classList.remove('show');
-    }, 8000);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-  function showBirthdayMessage() {
-    heading.style.opacity = '0';
-    countdown.style.opacity = '0';
-    celebrationMsg.style.opacity = '0';
+@keyframes pulse {
+    50% {
+        transform: scale(1.2);
+    }
+}
 
-    setTimeout(() => {
-      heading.classList.add('hidden');
-      countdown.classList.add('hidden');
-      celebrationMsg.classList.add('hidden');
-      message.classList.add('show');
-      startHeartRain();
-    }, 1500);
-  }
+@keyframes fall {
+    from {
+        transform: translateY(-10vh) rotate(0deg);
+    }
 
-  function startHeartRain() {
-    setInterval(() => {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.width = heart.style.height = 10 + Math.random() * 20 + 'px';
-      heart.style.backgroundColor = 'rgba(255, 105, 180, ' + (0.2 + Math.random() * 0.4) + ')';
-      heart.style.animationDuration = (5 + Math.random() * 5) + 's';
-      heartsContainer.appendChild(heart);
-      setTimeout(() => heart.remove(), 8000);
-    }, 250);
-  }
+    to {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Falling flowers -->
+<div class="flower" style="left:5%; animation-duration:11s;">🌸</div>
+<div class="flower" style="left:18%; animation-duration:14s; animation-delay:2s;">🌷</div>
+<div class="flower" style="left:35%; animation-duration:12s; animation-delay:5s;">🌺</div>
+<div class="flower" style="left:55%; animation-duration:15s; animation-delay:1s;">🌸</div>
+<div class="flower" style="left:73%; animation-duration:13s; animation-delay:4s;">🌹</div>
+<div class="flower" style="left:90%; animation-duration:10s; animation-delay:3s;">🌷</div>
+
+
+<!-- PAGE 1 -->
+<section id="page1" class="page active">
+
+    <div class="card">
+
+        <div class="heart">💗</div>
+
+        <div class="date">
+            Our Love Story
+        </div>
+
+        <h1>
+            10th<br>
+            September
+        </h1>
+
+        <div class="date">
+            A date that means everything to me 🌸
+        </div>
+
+        <button class="btn next" onclick="showPage('page2')">
+            Why today is so special? 💞
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PAGE 2 -->
+<section id="page2" class="page">
+
+    <div class="card">
+
+        <h2>
+            Why today is so special? 🌻
+        </h2>
+
+        <p>
+            Happy 3rd Love Anniversary, my Baban!
+            <br><br>
+
+            Three years of love, laughter, silly fights, and unforgettable memories.
+            No matter what happens, you will always hold a special place in my heart. 🌻
+
+            <br><br>
+
+            September 10th isn't just a date to me—it’s where our beautiful story began.
+            That exact moment at 6:40 PM when you proposed still brings an instant smile
+            to my face every time I think about it.
+
+            <br><br>
+
+            Here’s to us and all the beautiful moments yet to come.
+            I love you! 💞
+        </p>
+
+        <button class="btn next" onclick="showPage('page3')">
+            How special you are to me? 💗
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PAGE 3 -->
+<section id="page3" class="page">
+
+    <div class="card">
+
+        <h2>
+            How special you are to me? 🌷
+        </h2>
+
+        <p>
+            You are so special to me because you aren’t just the person I love—you are
+            a part of my happiest moments, my laughter, my tears, and every emotional
+            space in between.
+
+            <br><br>
+
+            Even the smallest, quietest moments we share mean the world to me,
+            turning into memories I carry close to my heart every single day.
+
+            <br><br>
+
+            Being with you makes everything in life feel brighter and far more meaningful. 💞
+        </p>
+
+        <button class="btn next" onclick="showPage('page4')">
+            Can we restart again? 🥺
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- PAGE 4 -->
+<section id="page4" class="page">
+
+    <div class="card">
+
+        <h2>
+            Can we restart again? 🌸
+        </h2>
+
+        <p>
+            I really wish we could go back to how things used to be between us.
+            Let’s leave all the misunderstandings, the anger, and the silly hurt
+            feelings in the past where they belong.
+
+            <br><br>
+
+            I miss us so much—the endless laughter, our little adventures, and
+            the effortless way we used to spend time together.
+
+            <br><br>
+
+            I want to fix everything, clear the air, and rebuild what we lost.
+            Can we please give us another chance and turn the page together?
+            🥺✨💬🌸
+        </p>
+
+        <h3>
+            So, Will you be only mine again? 💗
+        </h3>
+
+        <div id="noArea">
+
+            <button class="btn yes" onclick="showPage('page5')">
+                YES 💚
+            </button>
+
+            <button class="btn no" id="noBtn" onclick="noClicked()">
+                NO ❤️
+            </button>
+
+        </div>
+
+        <div id="message"></div>
+
+    </div>
+
+</section>
+
+
+<!-- PAGE 5 -->
+<section id="page5" class="page">
+
+    <div class="card">
+
+        <div class="heart">
+            💖
+        </div>
+
+        <h2>
+            Thank you for choosing us 🌸
+        </h2>
+
+        <p>
+            Thank you so much for choosing us, for listening to my heart, and for
+            agreeing to give our love another chance.
+
+            <br><br>
+
+            I know things haven't been easy and we’ve faced some tough moments,
+            but standing there and fighting for us was the easiest decision
+            I’ve ever made.
+
+            <br><br>
+
+            Your presence means the absolute world to me, and I don't take this
+            second chance for granted.
+
+            <br><br>
+
+            I promise to work through our differences, cherish you every single day,
+            and make sure our future is filled with understanding, joy, and the deep
+            love we truly deserve.
+
+            <br><br>
+
+            Thank you for staying and taking my hand again. 💖✨
+
+            Hold on to this love, and let's make this new chapter our absolute best
+            one yet. 💕🥂
+        </p>
+
+        <div class="date">
+            Forever starts again. 💞
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+/* Change page */
+function showPage(pageId) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(page => page.classList.remove("active"));
+
+    document
+        .getElementById(pageId)
+        .classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* NO button messages */
+const messages = [
+
+    "Na toke amar hotei hbe 😭😭",
+
+    "ei yes tep na amar hoye ja 😭",
+
+    "ebar marbo kintu amar ho na 🥺",
+
+    "dekh ami to toke bhalobasi bol yes tep 🥺😭",
+
+    "eto attitude keno? 😭 ekbar YES bole de na 💗",
+
+    "NO option ta bhul kore diyechi mone hoy 🥹🌸",
+
+    "last chance... YES tep kor! 😭💞"
+
+];
+
+let noCount = 0;
+
+
+/* NO button clicked */
+function noClicked() {
+
+    const message = document.getElementById("message");
+
+    /*
+       Every click shows the next message.
+       After the final message, it keeps showing the final message.
+    */
+
+    message.textContent =
+        messages[Math.min(noCount, messages.length - 1)];
+
+    noCount++;
+
+
+    /*
+       After clicking NO twice,
+       the button starts moving around.
+    */
+
+    const noButton = document.getElementById("noBtn");
+    const area = document.getElementById("noArea");
+
+    if (noCount >= 8) {
+
+        const maxX = 10;
+            
+
+        const maxY = - 500;
+
+        noButton.style.position = "absolute";
+
+        noButton.style.left =
+            Math.random() * maxX + "px";
+
+        noButton.style.top =
+            Math.random() * maxY + "px";
+    }
+
+}
+
 </script>
+
 </body>
 </html>
+      
