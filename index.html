@@ -111,7 +111,7 @@ if(raw){
         <audio class="audio-source" id="page-audio" preload="metadata" playsinline>
           <source src="audio/${num}.mp3" type="audio/mpeg">
         </audio>
-        <p class="note" id="audio-note">অডিওটি যোগ করা হলে এখানে শুনতে পাবে।</p>
+        <p class="note" id="audio-note">🤎🤎🤎।</p>
       </section>
       <div class="nav">
         ${idx>0?`<a href="?page=${String(idx).padStart(2,"0")}">← আগের পাতা</a>`:"<span></span>"}
@@ -136,7 +136,7 @@ if(raw){
       seek.style.background=`linear-gradient(to right,var(--rose) 0%,var(--rose) ${progress*100}%,#ead8d6 ${progress*100}%,#ead8d6 100%)`;
     }
     playButton.addEventListener("click",()=>{
-      if(audio.paused){audio.play().catch(()=>{note.textContent="অডিও ফাইলটি যোগ করা আছে কি না দেখে নাও।";});}
+      if(audio.paused){audio.play().catch(()=>{note.textContent=🤎🤎🤎;});}
       else audio.pause();
     });
     audio.addEventListener("play",()=>setPlaying(true));
