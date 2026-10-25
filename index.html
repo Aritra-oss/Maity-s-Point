@@ -53,8 +53,7 @@ hr{border:0;border-top:1px solid var(--line);margin:30px 0 22px}
     <div class="ornament">✦ · ✧ · ✦</div>
     <h1>ষোলোটি পাতায়<br>এক অচেনা মায়া</h1>
     <p class="subtitle">কিছু মানুষকে নিয়ে গল্প লেখা যায় না—তাঁরা নিজেরাই একটা গোটা গল্প।</p>
-    <p style="text-align:center;line-height:2">এই বইয়ের প্রতিটি পাতার শেষে একটি করে QR কোড থাকবে। সেই কোড স্ক্যান করলেই শোনা যাবে পাতাটির গল্প, লেখকের নিজের কণ্ঠে।</p>
-    <hr>
+    
     <p style="text-align:center;font-size:14px;line-height:2">পাতা বেছে নাও</p>
     <div id="toc" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px"></div>
     <div class="footer">তোমার জন্য, তোমার ষোলোতম জন্মদিনে</div>
@@ -136,7 +135,7 @@ if(raw){
       seek.style.background=`linear-gradient(to right,var(--rose) 0%,var(--rose) ${progress*100}%,#ead8d6 ${progress*100}%,#ead8d6 100%)`;
     }
     playButton.addEventListener("click",()=>{
-      if(audio.paused){audio.play().catch(()=>{note.textContent=🤎🤎🤎;});}
+      if(audio.paused){audio.play().catch(()=>{note.textContent="🤎🤎🤎";});}
       else audio.pause();
     });
     audio.addEventListener("play",()=>setPlaying(true));
@@ -145,7 +144,7 @@ if(raw){
     audio.addEventListener("timeupdate",updateSeek);
     audio.addEventListener("loadedmetadata",updateSeek);
     seek.addEventListener("input",()=>{if(audio.duration){audio.currentTime=(Number(seek.value)/1000)*audio.duration;updateSeek();}});
-    source.addEventListener("error",()=>{note.textContent="এই পাতার অডিও এখনও যোগ করা হয়নি।";});
+    source.addEventListener("error",()=>{note.textContent="🤎🤎🤎";});
     fetch(source.src,{method:"HEAD"}).then(r=>{if(r.ok)note.textContent="";}).catch(()=>{});
   }
 }
